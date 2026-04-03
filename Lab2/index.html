@@ -1,41 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang = "pl">
     <head>
-        <meta charset="utf-8">
-        <title>Laboratorium 3 - CSS</title>
-        <link rel="stylesheet" href="style.css">
+        <meta charset = "utf-8"/>
+        <meta name = "author" content = "Olga Szmuc"/>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0"/>
+        <title>Programowanie WSIiZ</title>
     </head>
-    <body>
-        <p class="naglowek">Laboratorium 3 - CSS</p>
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nibh tellus, tempor ut sem eu, porta luctus lacus. Proin eu lorem a dolor elementum porttitor vel at orci. Pellentesque interdum venenatis lacus et. Curabitur convallis tristique sapien, vel efficitur ex vestibulum sit amet. Nullam aliquet diam at justo tempus, in scelerisque mi bibendum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-        </div>
-        <p style="text-align: center;">A to jest przykładowy odnośnik <a href="https://www.w3schools.com/css/default.asp" target="blank">do kursu CSS</a></p>
 
-        <table>
+    <body>
+        <div><a href="index.html">Strona 1</a></div>
+        <div><a href="podstrona.html">Strona 2</a></div>
+
+        <h1>Olga Szmuc</h1>
+        <p>W Szczebrzeszynie chrząszcz brzmi w trzcinie</p>
+
+        <h2>Zainteresowania</h2>
+        <ul>
+            <li>słuchanie muzyki</li>
+            <li>gra na gitarze</li>
+            <li>czytanie książek</li>
+        </ul>
+
+        <ol>
+            <li>rysowanie</li>
+            <li>oglądanie filmów</li>
+        </ol>
+
+        <br><br><br>
+
+        <img src="sea_lion.jpg" height="400" width="300"/>
+
+        <p>
+            Oto link do strony <a href="https://wsiz.edu.pl/">uczelni</a>
+        </p>
+
+        <table border="1">
             <tr>
-                <td>To</td>
-                <td>jest</td>
-                <td>przykładowa</td>
-                <td>tabela</td>
+                <td>Lp.</td>
+                <td>Imię</td>
+                <td>Nazwisko</td>
+                <td>Oceny</td>
             </tr>
             <tr>
-                <td>a to</td>
-                <td>jest</td>
-                <td colspan="2">dłuższa komórka</td>
+                <td>1</td>
+                <td>Tytus</td>
+                <td>Szyluk</td>
+                <td>3, 4, 5+</td>
             </tr>
             <tr>
-                <td colspan="2">to też</td>
-                <td>jest</td>
-                <td>dłuższa komórka</td>
+                <td>2</td>
+                <td>Wojciech</td>
+                <td>Suchodolski</td>
+                <td>2, 1, 1+</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Andrzej</td>
+                <td>Pomarańcza</td>
+                <td>4, 3-, 4+</td>
             </tr>
         </table>
 
-        <p>A ten <span class="czerwony">tekst</span> trzeba będzie <span class="pomaranczowy">ciekawie pokolorować</span></p>
+        <br>
         
-        <ul>
-            <li>A tutaj pobawimy się</li>
-            <li>punktorami w listach</li>
-        </ul>
+        <table border="1">
+            <tr>
+                <td colspan="2">1</td>
+                <td>2</td>
+                <td rowspan="2">3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td rowspan="3">7</td>
+                <td>8</td>
+                <td colspan="2" rowspan="2">9</td>
+            </tr>
+            <tr>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td colspan="3">11</td>
+            </tr>
+        </table>
+
+        <br>
+
+        <iframe 
+            src="https://maps.google.com/maps?q=WSIiZ%20Rzesz%C3%B3w,%20Sucharskiego%202&output=embed" 
+            width="600" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+        </iframe>
     </body>
 </html>

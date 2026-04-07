@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Laboratorium 5</title>
+    </head>
+    <body>
+        <h1>Zadanie 7</h1>
+        <script>
+            function zamianaNaSzesnastkowy(liczba) {
+                if (liczba === 0) {
+                    return 0;
+                }
+                const znaki = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+                let wynik = "";
+                let reszta;
+
+                while (liczba > 0) {
+                    reszta = liczba % 16;
+                    let znakSzesnastkowy = znaki[reszta];
+                    wynik = znakSzesnastkowy + wynik;
+                    liczba = Math.floor(liczba / 16);
+                }
+                console.log(wynik);
+            }
+            console.log("Liczba 200 w systemie szesnastkowym to:");
+            zamianaNaSzesnastkowy(200);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Laboratorium 5</title>
+    </head>
+    <body>
+        <h1>Zadanie 5</h1>
+        <script>
+            function liczbaPi(n) {
+                let suma = 0;
+                for (let i = 0; i < n; i++) {
+                    let mianownik = (2 * i) + 1;
+                    let ulamek = 1 / mianownik;
+                    if (i % 2 === 0) {
+                        suma += ulamek;
+                    } else {
+                        suma -= ulamek;
+                    }
+                }
+                let wynik = 4 * suma;
+                console.log(`Przybliżenie liczby π dla n = ${n} wynosi: ${wynik}`);
+            }
+            liczbaPi(10);
+            liczbaPi(1000000);
+        </script>
+    </body>
+</html>

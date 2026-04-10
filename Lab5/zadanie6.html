@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Laboratorium 5</title>
+    </head>
+    <body>
+        <h1>Zadanie 6</h1>
+        <script>
+            function narysujChoinke(n) {
+                if (n <= 0) {
+                    console.log("Liczba n musi być większa od 0");
+                    return;
+                }
+                for (let i = 1; i <= n; i++) {
+                    let liczbaSpacji = n - i;
+                    let liczbaGwiazdek = 2 * i - 1;
+                    let wiersz = " ".repeat(liczbaSpacji) + "*".repeat(liczbaGwiazdek);
+                    console.log(wiersz);
+                }
+            }
+            console.log("Choinka dla n = 6:")
+            narysujChoinke(6);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Laboratorium 5</title>
+    </head>
+    <body>
+        <h1>Zadanie 2</h1>
+        <script>
+            function liczbyParzyste(a,b) {
+                let tablicaParzystych = [];
+                for (let i = a; i <= b; i++) {
+                    if (i % 2 === 0) {
+                        tablicaParzystych.push(i);
+                    }
+                }
+                console.log(tablicaParzystych);
+            }
+            liczbyParzyste(1, 10);
+        </script>
+    </body>
+</html>

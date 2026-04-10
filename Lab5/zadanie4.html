@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Laboratorium 5</title>
+    </head>
+    <body>
+        <h1>Zadanie 4</h1>
+        <script>
+            function funkcjaSilnia(n) {
+                if (n < 0) {
+                    console.log("Podaj liczbę większą lub równą 0");
+                    return;
+                }
+                if (n === 0 || n === 1) {
+                    return 1;
+                }
+                return n * funkcjaSilnia(n - 1);
+            }
+            let liczba = 5
+            let wynik = funkcjaSilnia(liczba);
+            console.log(`Silnia z ${liczba} wynosi ${wynik}`);
+        </script>
+    </body>
+</html>

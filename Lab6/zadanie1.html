@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 6</title>
+        <style>
+            #link_list {
+                visibility: hidden;
+                display: block;
+                background-color: tomato;
+                width: 100px;
+                position: absolute;
+                top: 50px;
+            }
+            #menu_link {
+                height: 60px;
+                width: 140px;
+                background-color: lightgreen;
+                align-content: center;
+                text-align: center;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <div id="menu_link">Opcja w menu</div>
+            <ul id="link_list">
+                <li>Link 1</li>
+                <li>Link 2</li>
+                <li>Link 3</li>
+                <li>Link 4</li>
+            </ul>
+        </div>
+        <script>
+            const menuContainer = document.getElementById("menu");
+            const linkList = document.getElementById("link_list");
+
+            menuContainer.addEventListener("mouseover", function() {
+                linkList.style.visibility = "visible";
+            });
+            menuContainer.addEventListener("mouseout", function() {
+                linkList.style.visibility = "hidden";
+            });
+        </script>
+    </body>
+</html>

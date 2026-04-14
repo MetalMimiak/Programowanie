@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 6</title>
+        <style>
+            #reset {
+                display: inline-block;
+            }
+            #stop {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="czas">
+            <span id="godziny">00</span>:<span id="minuty">00</span>:<span id="sekundy">00</span>
+        </h1>
+        <button id="start">START</button>
+        <button id="zapisz">ZAPISZ</button>
+        <button id="stop">STOP</button>
+        <button id="reset">RESET</button>
+        <p id="stan_stopera"></p>
+        <ul id="zapisane_czasy"></ul>
+
+        <script>
+            let totalSeconds = 0;
+            let timer = null;
+            let licznikOkrazen = 1;
+
+            const spanGodziny = document.getElementById("godziny");
+            const spanMinuty = document.getElementById("minuty");
+            const spanSekundy = document.getElementById("sekundy");
+
+            const btnStart = document.getElementById("start");
+            const btnZapisz = document.getElementById("zapisz");
+            const btnStop = document.getElementById("stop");
+            const btnReset = document.getElementById("reset");
+
+            const stanStopera = document.getElementById("start_stopera");
+            const zapisaneCzasy = document.getElementById("zapisane_czasy");
+
+            function formatujCzas(wartosc) {
+                if (wartosc < 10) {
+                    return "0" + wartosc;
+                }
+                return wartosc;
+            }
+
+            function aktualizujStoper() {
+                let h = Math.floor(totalSeconds / 3600);
+                let m = Math.floor((totalSeconds % 3600) / 60);
+                let s = totalSeconds % 60;
+
+                spanGodziny.innerText = formatujCzas(h);
+                spanMinuty.innerText = formatujCzas(m);
+                spanSekundy.innerText = formatujCzas(s);
+            }
+
+            function czasJakoTekst() {
+                let h = Math.floor(totalSeconds / 3600);
+                let m = Math.floor((totalSeconds % 3600) / 60);
+                let s = totalSeconds % 60;
+                return formatujCzas(h) + ":" + formatujCzas(m) + ":" + formatujCzas(s);
+            }
+
+            btnStart.addEventListener("click", function() {
+                btnStart.style.display = "none";
+                btnReset.style.display = "none";
+                btnStop.style.display = "inline-block";
+
+                pStan.innerText = "Odliczanie...";
+
+                timer = setInterval(function() {
+                    totalSeconds++;
+                    aktualizujStoper();
+                }, 1000);
+            });
+
+            btnStop.addEventListener("click", function() {
+                clearInterval(timer);
+
+                btnStop.style.display = "none";
+                btnStart.style.display = "inline-block";
+                btnReset.style.display = "inline-block";
+
+                pStan.innerText = "Wstrzymano odliczanie";
+            });
+
+            btnZapisz.addEventListener("click", function() {
+                const nowyElementListy = document.createElement("li");
+                nowyElementListy.innerText = licznikOkrazen + ". " + czasJakoTekst();
+                zapisaneCzasy.appendChild(nowyElementListy);
+                licznikOkrazen++;
+            });
+
+            btnReset.addEventListener("click", function() {
+                clearInterval(timer);
+                totalSeconds = 0;
+                licznikOkrazen = 1;
+                aktualizujStoper();
+
+                pStan.innerText = "";
+                zapisaneCzasy.innerHTML = "";
+
+                btnStart.style.display = "inline-block";
+                btnStop.style.display = "none";
+                btnReset.style.display = "none";
+            });
+        </script>
+    </body>
+</html>

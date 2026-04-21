@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 7</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            label {
+                display: inline-block;
+                width: 180px;
+                font-weight: bold;
+            }
+            #komunikaty {
+                margin-top: 20px;
+                color: red;
+                font-weight: bold;
+            }
+            #podsumowanie {
+                margin-top: 20px;
+                color: green;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Formularz rejestracji</h2>
+
+        <form id="form-rejestr">
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika:</label>
+                <input type="text" id="username">
+            </div>
+            <div class="form-group">
+                <label for="email">Adres e-mail:</label>
+                <input type="text" id="email">
+            </div>
+            <div class="form-group">
+                <label for="haslo1">Hasło:</label>
+                <input type="password" id="haslo1">
+            </div>
+            <div class="form-group">
+                <label for="haslo2">Powtórz hasło:</label>
+                <input type="password" id="haslo2">
+            </div>
+            <div class="form-group">
+                <label for="dataUrodzenia">Data urodzenia:</label>
+                <input type="date" id="dataUrodzenia">
+            </div>
+            <div class="form-group">
+                <label for="plec">Płeć:</label>
+                <select id="plec">
+                    <option value="">Wybierz</option>
+                    <option value="Mężczyzna">Mężczyzna</option>
+                    <option value="Kobieta">Kobieta</option>
+                    <option value="Nie chcę podawać">Nie chcę podawać</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Wybór wersji:</label>
+                <input type="radio" name="wersja" value="Wersja darmowa">Wersja darmowa
+                <input type="radio" name="wersja" value="Wersja standardowa">Wersja standardowa
+                <input type="radio" name="wersja" value="Wersja premium">Wersja premium
+            </div>
+            <div class="form-group">
+                <label></label>
+                <input type="checkbox" id="regulamin">Akceptuję regulamin
+            </div>
+
+            <button type="submit" id="btnZarejestruj">Zarejestruj się</button>
+            <button type="reset" id="btnWyczysc">Wyczyść</button>
+        </form>
+
+        <div id="komunikaty"></div>
+        <div id="podsumowanie"></div>
+
+        <script>
+            document.getElementById('form-rejestr').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const divKomunikaty = document.getElementById('komunikaty');
+                const divPodsumowanie = document.getElementById('podsumowanie');
+                divKomunikaty.innerHTML = '';
+                divPodsumowanie.innerHTML = '';
+
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const haslo1 = document.getElementById('haslo1').value;
+                const haslo2 = document.getElementById('haslo2').value;
+                const dataUrStr = document.getElementById('dataUrodzenia').value;
+                const plec = document.getElementById('plec').value;
+                const regulamin = document.getElementById('regulamin').checked;
+
+                const wersjaRadio = document.querySelector('input[name="wersja"]:checked');
+                const wersja = wersjaRadio ? wersjaRadio.value : "";
+
+                let bledy = [];
+
+                if (!username || !email || !haslo1 || !haslo2 || !dataUrStr || !plec || !wersja || !regulamin) {
+                    bledy.push("Wszystkie pola są wymagane");
+                }
+
+                const alfanumeryczne = /^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+                if (username && !alfanumeryczne.test(username)) {
+                    bledy.push("Nazwa użytkownika może zawierać tylko litery i cyfry");
+                }
+
+                const hasloRegex = /(?=.*\d).{8,}/;
+                if (haslo1 && !hasloRegex.text(haslo1)) {
+                    bledy.push("Hasło musi mieć co najmniej 8 znaków oraz zawierać co najmniej jedną cyfrę");
+                }
+                if (haslo1 !== haslo2) {
+                    bledy.push("Hasła muszą być takie same");
+                }
+
+                const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                if (email && !emailRegex.test(email)) {
+                    bledy.push("Podany adres e-mail jest nieprawidłowy");
+                }
+
+                if (dataUrStr) {
+                    const dataUrodzenia = new Date(dataUrStr);
+                    const dzisiaj = new Date();
+
+                    let wiek = dzisiaj.getFullYear() - dataUrodzenia.getFullYear();
+                    const miesiac = dzisiaj.getMonth() - dataUrodzenia.getMonth();
+
+                    if (miesiac < 0 || (miesiac === 0 && dzisiaj.getDate() < dataUrodzenia.getDate())) {
+                        wiek--;
+                    }
+
+                    if (wiek < 18) {
+                        bledy.push("Musisz mieć ukończone 18 lat, aby się zarejestrować");
+                    }
+                }
+
+                if (bledy.length > 0) {
+                    let htmlBledow = "<ul>";
+                        for (let i = 0; i <bledy.length; i++) {
+                            htmlBledow += "<li>" + bledy[i] + "</li>";
+                        }
+                        htmlBledow += "</ul>";
+                        divKomunikaty.innerHTML = htmlBledow;
+                } else {
+                    const dataObj = new Date(dataUrStr);
+                    const dzien = String(dataObj.getDate()).padStart(2, '0');
+                    const miesiac = String(dataObj.getMonth() + 1).padStart(2, '0');
+                    const rok = dataObj.getFullYear();
+                    const dataSformatowana = `${dzien}.${miesiac}.${rok}`;
+
+                    const maskowaneHaslo = "*".repeat(haslo1.length);
+
+                    divPodsumowanie.innerHTML = `
+                        Nazwa użytkowanika: ${username} <br><br>
+                        Hasło: ${maskowaneHaslo} <br><br>
+                        Adres e-mail: ${email} <br><br>
+                        Data urodzenia: ${dataSformatowana} <br><br>
+                        Płeć: ${plec} <br><br>
+                        Wybrana wersja: ${wersja}
+                    `;
+                }
+            });
+        </script>
+    </body>
+</html>

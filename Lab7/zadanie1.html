@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 7</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            input, button {
+                padding: 5px;
+                margin: 5px;
+            }
+            #wynik {
+                font-weight: bold;
+                margin-top: 15px;
+            }
+            .error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Dzielenie liczb</h2>
+        <input type="text" id="liczba1" placeholder="Podaj pierwszą liczbę">
+        /
+        <input type="text" id="liczba2" placeholder="Podaj drugą liczbę">
+        <button id="btnPodziel">Oblicz</button>
+
+        <div id="wynik"></div>
+
+        <script>
+            document.getElementById('btnPodziel').addEventListener('click', function() {
+                const poleWyniku = document.getElementById('wynik');
+                poleWyniku.innerText = '';
+                poleWyniku.className = '';
+
+                try {
+                    let val1 = document.getElementById('liczba1').value.trim().replace(',', '.');
+                    let val2 = document.getElementById('liczba2').value.trim().replace(',', '.');
+
+                    if (val1 === '' || val2 === '') {
+                        throw new Error("Pola nie mogą być puste");
+                    }
+
+                    let num1 = parseFloat(val1);
+                    let num2 = parseFloat(val2);
+
+                    if (isNaN(num1) || isNaN(num2)) {
+                        throw new Error("Wprowadzone wartości muszą być liczbami");
+                    }
+
+                    if (num2 === 0) {
+                        throw new Error("Nie można dzielić przez zero");
+                    }
+
+                    let wynikDzielenia = num1 / num2;
+                    poleWyniku.innerText = `Wynik: ${wynikDzielenia}`;
+                } catch (error) {
+                    poleWyniku.innerText = `Błąd: ${error.message}`;
+                    poleWyniku.className = 'error';
+                }
+            });
+        </script>
+    </body>
+</html>

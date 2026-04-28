@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 8</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            .form-group {
+                margin-bottom: 10px;
+            }
+            label {
+                display: inline-block;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Formularz:</h2>
+        <div class="form-group">
+            <label for="imie">Imię:</label>
+            <input type="text" id="imie">
+        </div>
+        <div class="form-group">
+            <label for="nazwisko">Nazwisko:</label>
+            <input type="text" id="nazwisko">
+        </div>
+        <div class="form-group">
+            <label for="wiek">Wiek:</label>
+            <input type="number" id="wiek">
+        </div>
+
+        <button id="btnZapisz">Zapisz</button>
+
+        <script>
+            document.getElementById('btnZapisz').addEventListener('click', function() {
+                let wpisaneImie = document.getElementById('imie').value;
+                let wpisaneNazwisko = document.getElementById('nazwisko').value;
+                let wpisanyWiek = document.getElementById('wiek').value;
+
+                let uzytkownik = {
+                    imie: wpisaneImie,
+                    nazwisko: wpisaneNazwisko,
+                    wiek: wpisanyWiek,
+                };
+
+                console.log('Cały obiekt:');
+                console.log(uzytkownik);
+
+                console.log('Osobno:');
+                console.log('Imię: ' + uzytkownik.imie);
+                console.log('Nazwisko: ' + uzytkownik.nazwisko);
+                console.log('Wiek: ' + uzytkownik.wiek);
+
+                let uzytkownikJSON = JSON.stringify(uzytkownik);
+                console.log('W formacie JSON:');
+                console.log(uzytkownikJSON);
+            })
+        </script>
+    </body>
+</html>

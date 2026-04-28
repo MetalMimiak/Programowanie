@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 8</title>
+    </head>
+    <body>
+        <h2>Zadanie 2</h2>
+
+        <script>
+            class ComplexNumber {
+                constructor(real, imaginary) {
+                    this.real = real;
+                    this.imaginary = imaginary;
+                }
+
+                wypisz() {
+                    if (this.imaginary < 0) {
+                        return this.real + " - " + Math.abs(this.imaginary) + "i";
+                    } else {
+                        return this.real + " + " + this.imaginary + "i";
+                    }
+                }
+
+                module() {
+                    let realKwadrat = Math.pow(this.real, 2);
+                    let imaginaryKwadrat = Math.pow(this.imaginary, 2);
+
+                    return Math.sqrt(realKwadrat + imaginaryKwadrat);
+                }
+            }
+
+            let liczba = new ComplexNumber(6, -7);
+            console.log(liczba);
+            console.log(liczba.wypisz());
+            console.log(liczba.module());
+
+            let liczba2 = new ComplexNumber(3, 4);
+            console.log(liczba2);
+            console.log(liczba2.wypisz());
+            console.log(liczba2.module());
+        </script>
+    </body>
+</html>

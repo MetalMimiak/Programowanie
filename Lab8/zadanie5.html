@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 8</title>
+    </head>
+    <body>
+        <h2>Zadanie 5</h2>
+
+        <script>
+            class ComplexNumber {
+                constructor(real, imaginary) {
+                    this.real = real;
+                    this.imaginary = imaginary;
+                }
+                
+                wypisz() {
+                    if (this.imaginary < 0) return this.real + " - " + Math.abs(this.imaginary) + "i";
+                    else return this.real + " + " + this.imaginary + "i";
+                }
+            }
+
+            function generujTabliceZespolonych(n) {
+                let tablica = [];
+                for (let i = 0; i < n; i++) {
+                    let r = Math.floor(Math.random() * 21) - 10; 
+                    let im = Math.floor(Math.random() * 21) - 10;
+                    tablica.push(new ComplexNumber(r, im));
+                }
+                return tablica;
+            }
+
+            const dane = generujTabliceZespolonych(5);
+            dane.forEach(liczba => console.log(liczba.wypisz()));
+
+            const zamienione = dane.map(liczba => new ComplexNumber(liczba.imaginary, liczba.real));
+            console.log("Po zamianie:");
+            zamienione.forEach(liczba => console.log(liczba.wypisz()));
+        </script>
+    </body>
+</html>

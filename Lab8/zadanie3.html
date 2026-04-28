@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 8</title>
+    </head>
+    <body>
+        <h2>Zadanie 3</h2>
+
+        <script>
+            class ComplexNumber {
+                constructor(real, imaginary) {
+                    this.real = real;
+                    this.imaginary = imaginary;
+                }
+
+                wypisz() {
+                    if (this.imaginary < 0) {
+                        return this.real + " - " + Math.abs(this.imaginary) + "i";
+                    } else {
+                        return this.real + " + " + this.imaginary + "i";
+                    }
+                }
+
+                module() {
+                    return Math.sqrt(Math.pow(this.real, 2) + Math.pow(this.imaginary, 2));
+                }
+            }
+
+            function losujCalkowita(min, max) {
+                return Math.floor(Math.random() * (max - min +1)) + min;
+            }
+
+            function generujTabliceZespolonych(n) {
+                let tablica = [];
+                for (let i = 0; i < n; i++) {
+                    let losoweReal = losujCalkowita(-10, 10);
+                    let losoweImaginary = losujCalkowita(-10, 10);
+
+                    let nowaZespolona = new ComplexNumber(losoweReal, losoweImaginary);
+                    tablica.push(nowaZespolona);
+                }
+                return tablica;
+            }
+
+            let tablicaZespolonych = generujTabliceZespolonych(5);
+            console.log(tablicaZespolonych);
+
+            console.log("W formacie tekstoowym:");
+            for (let i = 0; i < tablicaZespolonych.length; i++) {
+                console.log(tablicaZespolonych[i].wypisz());
+            }
+        </script>
+    </body>
+</html>

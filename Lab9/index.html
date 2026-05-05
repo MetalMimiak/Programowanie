@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <title>Laboratorium 9</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                text-align: center;
+                margin-top: 50px;
+                background-color: #f4f4f9;
+            }
+            #punkty-display {
+                font-size: 2em;
+                font-weight: bold;
+                margin: 20px 0;
+                color: #333;
+            }
+            .btn-glowny {
+                font-size: 1.5em;
+                padding: 15px 30px;
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                margin-bottom: 30px;
+            }
+            .btn-glowny:active {
+                transform: scale(0.95);
+            }
+            .ulepszenia {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            .sklep-item {
+                background: #fff;
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                width: 250px;
+            }
+            button {
+                cursor: pointer;
+                padding: 8px 15px;
+                margin-top: 10px;
+            }
+            #reset-btn {
+                margin-top: 50px;
+                background-color: #ff4c4c;
+                color: white;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Zadanie - gra clicker</h1>
+        
+        <div>Liczba punktów:</div>
+        <div id="punkty-display">0</div>
+        
+        <button id="klikacz" class="btn-glowny">Zdobądź punkty</button>
+
+        <h2>Ulepszenia</h2>
+        <div class="ulepszenia">
+            <div class="sklep-item">
+                <h3>Moc kliknięcia</h3>
+                <p>Obecnie: +<span id="moc-info">1</span> pkt/klik</p>
+                <button id="kup-moc">Kup (Koszt: <span id="koszt-mocy">10</span>)</button>
+            </div>
+
+            <div class="sklep-item">
+                <h3>Dochód pasywny</h3>
+                <p>Obecnie: +<span id="pasywny-info">0</span> pkt/sek</p>
+                <button id="kup-pasywny">Kup (Koszt: <span id="koszt-pasywny">50</span>)</button>
+            </div>
+        </div>
+
+        <button id="reset-btn">Resetuj zapis gry</button>
+
+        <script>
+            let gra = {
+                punkty: 0,
+                mocKlikniecia: 1,
+                dochodPasywny: 0,
+                kosztMocy: 10,
+                kosztPasywny: 50,
+                ostatniZapis: Date.now()
+            };
+
+            const displayPunkty = document.getElementById('punkty-display');
+            const displayMocInfo = document.getElementById('moc-info');
+            const displayKosztMocy = document.getElementById('koszt-mocy');
+            const displayPasywnyInfo = document.getElementById('pasywny-info');
+            const displayKosztPasywny = document.getElementById('koszt-pasywny');
+
+            function aktualizujEkran() {
+                displayPunkty.innerText = Math.floor(gra.punkty);
+                displayMocInfo.innerText = gra.mocKlikniecia;
+                displayKosztMocy.innerText = gra.kosztMocy;
+                displayPasywnyInfo.innerText = gra.dochodPasywny;
+                displayKosztPasywny.innerText = gra.kosztPasywny;
+            }
+
+            function zapiszGre() {
+                gra.ostatniZapis = Date.now();
+                localStorage.setItem('mojZapisClickera', JSON.stringify(gra));
+            }
+
+            function wczytajGre() {
+                let zapis = localStorage.getItem('mojZapisClickera');
+                if (zapis) {
+                    gra = JSON.parse(zapis);
+                    obliczOfflinePunkty();
+                }
+                aktualizujEkran();
+            }
+
+            function obliczOfflinePunkty() {
+                if (gra.dochodPasywny > 0) {
+                    let teraz = Date.now();
+                    let roznicaSekund = Math.floor((teraz - gra.ostatniZapis) / 1000); 
+                    
+                    if (roznicaSekund > 0) {
+                        let zdobyteOffline = roznicaSekund * gra.dochodPasywny;
+                        gra.punkty += zdobyteOffline;
+                        alert("Witaj z powrotem! Podczas twojej nieobecności zarobiłeś: " + zdobyteOffline + " punktów!");
+                    }
+                }
+            }
+
+            document.getElementById('klikacz').addEventListener('click', () => {
+                gra.punkty += gra.mocKlikniecia;
+                aktualizujEkran();
+                zapiszGre();
+            });
+
+            document.getElementById('kup-moc').addEventListener('click', () => {
+                if (gra.punkty >= gra.kosztMocy) {
+                    gra.punkty -= gra.kosztMocy;
+                    gra.mocKlikniecia += 1;
+                    gra.kosztMocy = Math.floor(gra.kosztMocy * 1.5);
+                    aktualizujEkran();
+                    zapiszGre();
+                } else {
+                    alert("Za mało punktów!");
+                }
+            });
+
+            document.getElementById('kup-pasywny').addEventListener('click', () => {
+                if (gra.punkty >= gra.kosztPasywny) {
+                    gra.punkty -= gra.kosztPasywny;
+                    gra.dochodPasywny += 1;
+                    gra.kosztPasywny = Math.floor(gra.kosztPasywny * 1.5);
+                    aktualizujEkran();
+                    zapiszGre();
+                } else {
+                    alert("Za mało punktów!");
+                }
+            });
+
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                if(confirm("Czy na pewno chcesz zresetować cały postęp?")) {
+                    localStorage.removeItem('mojZapisClickera');
+                    location.reload();
+                }
+            });
+
+            setInterval(() => {
+                if (gra.dochodPasywny > 0) {
+                    gra.punkty += gra.dochodPasywny;
+                    aktualizujEkran();
+                    zapiszGre();
+                }
+            }, 1000);
+
+            wczytajGre();
+
+        </script>
+    </body>
+</html>
